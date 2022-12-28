@@ -1,4 +1,4 @@
-# Python实现16位客制化雪花算法(Snowflake)生成器
+# Python实现长度16位十进制整数的客制化雪花算法(Snowflake)生成器
 
 ### 前言
 

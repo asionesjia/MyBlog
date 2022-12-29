@@ -139,12 +139,30 @@ class SnowFlake:
             timestamp = self._gen_timestamp()
         return timestamp
 
+    def parse_id(self, to_be_parsed_id: int):
+        """
+        解析ID
+        """
+        binary = bin(to_be_parsed_id)
+        sequence = int(binary[-SERVICE_ID_SHIFT:], 2)
+        service_id = int(binary[-MACHINE_ID_SHIFT:-SERVICE_ID_SHIFT], 2)
+        machine_id = int(binary[-TIMESTAMP_LEFT_SHIFT:-MACHINE_ID_SHIFT], 2)
+        timestamp = int(binary[:-TIMESTAMP_LEFT_SHIFT], 2) + START_TIMESTAMP
+        date_time = datetime.fromtimestamp(timestamp / 1000)
+
+        return {
+            "timestamp": date_time,
+            "machine_id": machine_id,
+            "service_id": service_id,
+            "sequence": sequence
+        }
+
 
 if __name__ == '__main__':
-    worker = SnowFlake(1, 1, 0)
+    GneSFID = SnowFlake(1, 1, 0)
     start_timestamp = int(time.time() * 1000)
     for i in range(1000000):
-        print(worker.generate_id())
+        print(GneSFID.generate_id())
     end_timestamp = int(time.time() * 1000)
     waste_time = (end_timestamp - start_timestamp) / 1000
     print(waste_time)
@@ -161,3 +179,19 @@ if __name__ == '__main__':
 为了统一长度，可以这样做，将长度不够16位的ID前面用0补充占位。
 
 然后我就发现用 zfill() 补完0从str转为int后，0又消失不见了😵‍💫
+
+### 更新：新增 parse\_id() 解析ID方法
+
+该方法接收一个 to\_be\_parsed\_id: int 参数，解析后返回一个 dict: { "timestamp": date\_time, "machine\_id": machine\_id, "service\_id": service\_id, "sequence": sequence }
+
+方法使用示例:
+
+```python
+# ...省略 class SnowFlake
+
+if __name__ == '__main__':
+    GneSFID = SnowFlake(1, 1, 0)
+    for i in range(100000):
+        snow_id = GneSFID.generate_id()
+        print(snow_id, '-->', GenSFID.parse_id(snow_id))
+```

@@ -36,8 +36,6 @@ Javascript 整数表达最大为 2^53-1 位，大约是十进制16位，超过�
 
 ### 实现代码
 
-详细说明都在下面代码中：
-
 ```python
 import time
 
@@ -182,7 +180,7 @@ if __name__ == '__main__':
 
 ### 更新：新增 parse\_id() 解析ID方法
 
-代码更新在了上面的实现代码。
+代码更新在了上面的[实现代码](https://www.asiones.com/pythonsnowflake#heading-5a6e546w5luj56cb)。
 
 该方法接收一个 to\_be\_parsed\_id: int 参数，解析后返回一个 dict: { "timestamp": date\_time, "machine\_id": machine\_id, "service\_id": service\_id, "sequence": sequence }
 

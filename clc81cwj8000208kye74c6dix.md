@@ -195,3 +195,5 @@ if __name__ == '__main__':
         snow_id = GneSFID.generate_id()
         print(snow_id, '-->', GenSFID.parse_id(snow_id))
 ```
+
+> 如果这片文章对你有帮助的话，请给我点个赞吧👍🏼，就在你的屏幕右上方(手机底部)的😊按钮。
